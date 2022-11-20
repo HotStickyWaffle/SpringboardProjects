@@ -15,6 +15,7 @@ const board = [
 
 ]
 
+//populate array for tracking the value of all the squares
 function makeBoard() {
   for (let i = 0; i < HEIGHT; i++) {
     const arr = [];
@@ -30,7 +31,7 @@ function makeHtmlBoard() {
 
   // Build and append top row for selecting colomn to drop piece
   const top = document.createElement('tr');
-  top.setAttribute('id', 'column-top');
+  top.setAttribute('id', 'column-top-player1');
   top.addEventListener('click', handleClick);
 
   for (let i = 0; i < WIDTH; i++) {
@@ -51,8 +52,13 @@ function makeHtmlBoard() {
     }
     htmlBoard.append(row);
   }
+
+  const player1 = document.querySelector('#player1Info')
+  player1.setAttribute('style', 'background-color: rgba(218, 18, 18, 0.5)')
 }
 
+
+//Finds the lowest empty row in the selected column
 function findSpotForCol(column) {
   if (document.getElementById(`5-${column}`).classList.contains('empty')) {
     return 5;
@@ -91,13 +97,9 @@ function placeInTable(row, column) {
   }
 }
 
-/** endGame: announce game end */
-
 function endGame(msg) {
   alert(msg)
 }
-
-/** handleClick: handle click of column top to play piece */
 
 function handleClick(evt) {
   // get column from ID of clicked cell
@@ -109,44 +111,50 @@ function handleClick(evt) {
     return;
   }
 
-  //*************************************************************************************
-  console.log(row, column)
-  // **************************************************************************************
-
-  // place piece in board and add to HTML table
-  // TODO: add line to update in-memory board
   placeInTable(row, column);
 
-  // check for win
+  setTimeout(checkAndSwitch, 1)
+
+}
+
+//check for win, then check for filled board, and then switch players
+function checkAndSwitch() {
   if (checkForWin()) {
     return endGame(`Player ${currPlayer} won!`);
   }
 
-  // check for tie
-  // TODO: check if all cells in board are filled; if so call, call endGame
+  if (checkForFilledBoard()) {
+    alert('The board has been filled and there is no winner.  Try again?')
+  }
 
   // switch players
   if (currPlayer === 1) {
     currPlayer = 2;
-    playerColor = 'blue'
+    playerColor = 'blue';
+    const top = document.querySelector('#column-top-player1')
+    top.setAttribute('id', 'column-top-player2');
+
+    const player1 = document.querySelector('#player1Info')
+    player1.setAttribute('style', 'background-color: none');
+    const player2 = document.querySelector('#player2Info')
+    player2.setAttribute('style', 'background-color: rgba(17, 70, 143, .5)');
+
   } else {
     currPlayer = 1;
-    playerColor = 'red'
+    playerColor = 'red';
+    const top = document.querySelector('#column-top-player2')
+    top.setAttribute('id', 'column-top-player1');
+
+    const player1 = document.querySelector('#player1Info')
+    player1.setAttribute('style', 'background-color: rgba(218, 18, 18, 0.5)');
+    const player2 = document.querySelector('#player2Info')
+    player2.setAttribute('style', 'background-color: none');
   }
 }
-
-/** checkForWin: check board cell-by-cell for "does a win start here?" */
 
 function checkForWin() {
 
   function _win(cells) {
-    // Check four cells to see if they're all color of current player
-    //  - cells: list of four (row, column) cells
-    //  - returns true if all are legal coordinates & all match currPlayer
-
-    //*************************************************************************************
-    console.log(playerColor)
-    //*************************************************************************************
 
     return cells.every(
       ([row, column]) =>
@@ -158,6 +166,7 @@ function checkForWin() {
     );
   }
 
+  //loop through each square on the board, create an array of coordinates, and then run each array through the _win function to check if 4 squares in a row all have the class that matches the current player
   for (let i = 0; i < HEIGHT; i++) {
     for (let j = 0; j < WIDTH; j++) {
       const horiz = [[i, j], [i, j + 1], [i, j + 2], [i, j + 3]];
@@ -171,6 +180,16 @@ function checkForWin() {
     }
   }
 }
+
+function checkForFilledBoard() {
+  for (let i = 0; i < board.length; i++) {
+    return board[i].every((el) => el !== null)
+  }
+}
+
+const resetButton = document.querySelector('button');
+const resetGame = () => { location.reload() }
+resetButton.addEventListener('click', resetGame)
 
 makeBoard();
 makeHtmlBoard();

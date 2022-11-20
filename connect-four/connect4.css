@@ -1,25 +1,73 @@
+body {
+  background-color: rgb(238, 238, 238);
+  color: rgb(4, 21, 98);
+  font-family: Nunito, Arial, Helvetica, sans-serif;
+}
+
 /* game board table */
+
+h1 {
+  text-align: center;
+  font-size: 4rem;
+  margin: 1rem auto;
+}
+
+#player1 {
+  display: inline-block;
+  width: 45%;
+  margin-right: 5%;
+  text-align: right;
+}
+
+#player2 {
+  display: inline-block;
+  width: 45%;
+  margin-left: 5%;
+}
+
+p {
+  display: inline-block;
+  font-size: 1.5rem;
+}
+
+#player1Info {
+  margin-right: 0;
+  margin-left: auto;
+  padding: 0 1em;
+  border-radius: 5px;
+}
+
+#player2Info {
+  margin-right: auto;
+  margin-left: 0;
+  padding: 0 1em;
+  border-radius: 5px;
+}
+
+#score {
+  white-space: nowrap;
+}
+
+
+#board {
+  margin-left: auto;
+  margin-right: auto;
+}
 
 #board td {
   width: 50px;
   height: 50px;
-  border: solid 1px #666;
+  border: solid 1px rgb(4, 21, 98);
+  margin-left: auto;
+  margin-right: auto;
 }
-
-/* pieces are div within game table cells: draw as colored circles */
-
-/* .piece {
-  margin: 5px;
-  width: 80%;
-  height: 80%;
-} */
 
 .filledRed {
   margin: 5px;
   width: 80%;
   height: 80%;
   border-radius: 50%;
-  background-color: red;
+  background-color: rgb(218, 18, 18);
 }
 
 .filledBlue {
@@ -27,16 +75,35 @@
   width: 80%;
   height: 80%;
   border-radius: 50%;
-  background-color: blue;
+  background-color: rgb(17, 70, 143);
 }
 
 
-/* column-top is table row of clickable areas for each column */
-
-#column-top td {
-  border: dashed 1px lightgray;
+#column-top-player1 td {
+  border: dashed 1px rgb(211, 211, 211);
 }
 
-#column-top td:hover {
-  background-color: gold;
+#column-top-player1 td:hover {
+  background-color: rgba(218, 18, 18, 0.5);
+}
+
+#column-top-player2 td {
+  border: dashed 1px rgb(211, 211, 211);
+}
+
+#column-top-player2 td:hover {
+  background-color: rgba(17, 70, 143, .5);
+}
+
+button {
+  background-color: rgba(17, 70, 143);
+  color: rgb(211, 211, 211);
+  border-color: rgba(17, 70, 143, .5);
+  border-radius: 3px;
+  margin-left: 45%;
+  margin-right: 45%;
+  margin-top: 1rem;
+  padding: .25rem;
+  width: 10%;
+  font-size: 1rem;
 }
