@@ -59,26 +59,36 @@ function makeHtmlBoard() {
 
 
 //Finds the lowest empty row in the selected column
+// function findSpotForCol(column) {
+//   if (document.getElementById(`5-${column}`).classList.contains('empty')) {
+//     return 5;
+//   }
+//   else if (document.getElementById(`4-${column}`).classList.contains('empty')) {
+//     return 4
+//   }
+//   else if (document.getElementById(`3-${column}`).classList.contains('empty')) {
+//     return 3
+//   }
+//   else if (document.getElementById(`2-${column}`).classList.contains('empty')) {
+//     return 2
+//   }
+//   else if (document.getElementById(`1-${column}`).classList.contains('empty')) {
+//     return 1
+//   }
+//   else if (document.getElementById(`0-${column}`).classList.contains('empty')) {
+//     return 0
+//   }
+//   else { return null }
+// }
+
+//Finds the lowest empty row in the selected column
 function findSpotForCol(column) {
-  if (document.getElementById(`5-${column}`).classList.contains('empty')) {
-    return 5;
-  }
-  else if (document.getElementById(`4-${column}`).classList.contains('empty')) {
-    return 4
-  }
-  else if (document.getElementById(`3-${column}`).classList.contains('empty')) {
-    return 3
-  }
-  else if (document.getElementById(`2-${column}`).classList.contains('empty')) {
-    return 2
-  }
-  else if (document.getElementById(`1-${column}`).classList.contains('empty')) {
-    return 1
-  }
-  else if (document.getElementById(`0-${column}`).classList.contains('empty')) {
-    return 0
-  }
-  else { return null }
+  for (let i = board.length - 1; i >= 0; i--) {
+    console.log(i)
+    if (!board[i][column]) {
+      return i
+    }
+  } return null
 }
 
 function placeInTable(row, column) {
@@ -103,10 +113,15 @@ function endGame(msg) {
 
 function handleClick(evt) {
   // get column from ID of clicked cell
-  const column = +evt.target.id;
+  const column = +evt.target.id
 
   // get next spot in column (if none, ignore click)
   const row = findSpotForCol(column);
+
+  // if (!row) {
+  //   return;
+  // }
+
   if (row === null) {
     return;
   }
@@ -114,7 +129,6 @@ function handleClick(evt) {
   placeInTable(row, column);
 
   setTimeout(checkAndSwitch, 1)
-
 }
 
 //check for win, then check for filled board, and then switch players
@@ -127,6 +141,8 @@ function checkAndSwitch() {
     alert('The board has been filled and there is no winner.  Try again?')
   }
 
+  const player1 = document.querySelector('#player1Info')
+  const player2 = document.querySelector('#player2Info')
   // switch players
   if (currPlayer === 1) {
     currPlayer = 2;
@@ -134,9 +150,7 @@ function checkAndSwitch() {
     const top = document.querySelector('#column-top-player1')
     top.setAttribute('id', 'column-top-player2');
 
-    const player1 = document.querySelector('#player1Info')
     player1.setAttribute('style', 'background-color: none');
-    const player2 = document.querySelector('#player2Info')
     player2.setAttribute('style', 'background-color: rgba(17, 70, 143, .5)');
 
   } else {
@@ -144,10 +158,7 @@ function checkAndSwitch() {
     playerColor = 'red';
     const top = document.querySelector('#column-top-player2')
     top.setAttribute('id', 'column-top-player1');
-
-    const player1 = document.querySelector('#player1Info')
     player1.setAttribute('style', 'background-color: rgba(218, 18, 18, 0.5)');
-    const player2 = document.querySelector('#player2Info')
     player2.setAttribute('style', 'background-color: none');
   }
 }
@@ -188,8 +199,7 @@ function checkForFilledBoard() {
 }
 
 const resetButton = document.querySelector('button');
-const resetGame = () => { location.reload() }
-resetButton.addEventListener('click', resetGame)
+resetButton.addEventListener('click', () => { location.reload() })
 
 makeBoard();
 makeHtmlBoard();
