@@ -11,9 +11,7 @@ const HEIGHT = 6;
 let currPlayer = 1; // active player: 1 (red) or 2 (blue)
 let playerColor = 'red'
 
-const board = [
-
-]
+const board = []
 
 //populate array for tracking the value of all the squares
 function makeBoard() {
