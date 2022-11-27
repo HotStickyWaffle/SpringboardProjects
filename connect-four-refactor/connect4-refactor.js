@@ -84,7 +84,9 @@ class Game {
     }
 
     endGame(msg) {
-        alert(msg)
+        alert(msg);
+        const gameBoard = document.querySelector('#board');
+        gameBoard.classList.add('freeze')
     }
 
     handleClick(evt) {
@@ -105,11 +107,11 @@ class Game {
 
     checkAndSwitch() {
         if (this.checkForWin()) {
-            return this.endGame(`Player ${this.currPlayer} won!`);
+            return this.endGame(`Player ${this.currPlayer} won! Press 'Reset Game' to play again!`);
         }
 
         if (this.checkForFilledBoard()) {
-            alert('The board has been filled and there is no winner.  Try again?')
+            alert(`The board has been filled and there is no winner.  Press 'Reset Game' to try again`)
         }
 
         const player1 = document.querySelector('#player1Info')
@@ -184,11 +186,13 @@ class Game {
                 startResetButton.innerText = 'Reset Game';
             }
             else {
-                const board = document.querySelector('#board');
-                // board.remove();
-
-
-
+                const gameBoard = document.querySelector('#board');
+                const game = document.querySelector('#game')
+                gameBoard.remove();
+                const newGameBoard = document.createElement('table');
+                newGameBoard.setAttribute('id', 'board');
+                self.board = [];
+                game.append(newGameBoard)
                 self.makeBoard();
                 self.makeHtmlBoard();
             }
