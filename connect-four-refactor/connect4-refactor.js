@@ -7,6 +7,10 @@ class Game {
         this.playerColor = 'red';
 
         this.board = [];
+
+        this.makeBoard();
+        this.makeHtmlBoard();
+        this.resetButton()
     }
 
     makeBoard() {
@@ -25,7 +29,12 @@ class Game {
         // Build and append top row for selecting colomn to drop piece
         const top = document.createElement('tr');
         top.setAttribute('id', 'column-top-player1');
-        top.addEventListener('click', handleClick);
+
+        this.handleClick = this.handleClick.bind(this)
+
+        top.addEventListener('click', this.handleClick);
+        // top.addEventListener('click', handleClick.bind(Game));
+
 
         for (let i = 0; i < this.width; i++) {
             let headCell = document.createElement('td');
@@ -37,7 +46,7 @@ class Game {
         // Build board based on specified height and width
         for (let i = 0; i < this.height; i++) {
             const row = document.createElement('tr');
-            for (let j = 0; j this.width; j++) {
+            for (let j = 0; j < this.width; j++) {
                 const cell = document.createElement('td');
                 cell.setAttribute('id', `${i}-${j}`);
                 cell.setAttribute('class', 'empty')
@@ -59,6 +68,7 @@ class Game {
     }
 
     placeInTable(row, column) {
+        console.log('line 71')
         const placedCell = document.getElementById(`${row}-${column}`);
         placedCell.classList.remove('empty');
         const placedDiv = document.createElement('div')
@@ -67,10 +77,10 @@ class Game {
             //add color chip
             placedDiv.classList.add('filledRed');
             //update board array
-            board[row][column] = 'red'
+            this.board[row][column] = 'red'
         } else {
             placedDiv.classList.add('filledBlue');
-            board[row][column] = 'blue'
+            this.board[row][column] = 'blue'
         }
     }
 
@@ -90,7 +100,11 @@ class Game {
         }
 
         this.placeInTable(row, column);
-        this.setTimeout(this.checkAndSwitch, 1)
+
+        // setTimeout(this.checkAndSwitch(), 1)
+        // this.checkAndSwitch = this.checkAndSwitch.bind(this)
+        setTimeout(this.checkAndSwitch.bind(this), 1)
+        // this.checkAndSwitch();
     }
 
     checkAndSwitch() {
@@ -125,17 +139,18 @@ class Game {
     }
 
     checkForWin() {
-
-        function _win(cells) {
+        let self = this
+        let _win = function (cells) {
 
             return cells.every(
                 ([row, column]) =>
                     row >= 0 &&
-                    row < this.height &&
+                    row < self.height &&
                     column >= 0 &&
-                    column < this.width &&
-                    board[row][column] === this.playerColor
+                    column < self.width &&
+                    self.board[row][column] === self.playerColor
             );
+
         }
 
         //loop through each square on the board, create an array of coordinates, and then run each array through the _win function to check if 4 squares in a row all have the class that matches the current player
@@ -159,9 +174,11 @@ class Game {
         }
     }
 
-    // this.makeBoard();
-    // this.makeHtmlBoard();
+    resetButton() {
+        const resetButton = document.querySelector('button');
+        resetButton.addEventListener('click', () => { location.reload() })
+    }
 }
 
-// const resetButton = document.querySelector('button');
-// resetButton.addEventListener('click', () => { location.reload() })
+new Game(7, 6);
+
