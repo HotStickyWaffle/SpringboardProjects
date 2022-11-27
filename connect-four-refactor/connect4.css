@@ -14,14 +14,14 @@ h1 {
 
 #player1 {
   display: inline-block;
-  width: 45%;
+  width: 40%;
   margin-right: 5%;
   text-align: right;
 }
 
 #player2 {
   display: inline-block;
-  width: 45%;
+  width: 40%;
   margin-left: 5%;
 }
 
@@ -95,13 +95,30 @@ p {
   background-color: rgba(17, 70, 143, .5);
 }
 
-button {
-  background-color: rgba(17, 70, 143);
+.start {
+  background-color: rgb(17, 70, 143);
   color: rgb(211, 211, 211);
   border-color: rgba(17, 70, 143, .5);
   border-radius: 3px;
-  margin-left: 45%;
-  margin-right: 45%;
+  /* margin-left: 45%;
+  margin-right: 45%; */
+  margin-bottom: 5%;
+  margin: none;
+  margin-top: 1rem;
+  padding: .25rem;
+  width: 10%;
+  font-size: 1rem;
+}
+
+.reset {
+  background-color: rgb(218, 18, 18);
+  color: rgb(211, 211, 211);
+  border-color: rgba(218, 18, 18, 0.5);
+  border-radius: 3px;
+  /* margin-left: 45%;
+  margin-right: 45%; */
+  margin-bottom: 5%;
+  margin: none;
   margin-top: 1rem;
   padding: .25rem;
   width: 10%;

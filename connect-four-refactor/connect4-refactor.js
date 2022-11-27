@@ -8,9 +8,9 @@ class Game {
 
         this.board = [];
 
-        this.makeBoard();
-        this.makeHtmlBoard();
-        this.resetButton()
+        // this.makeBoard();
+        // this.makeHtmlBoard();
+        this.startResetButton()
     }
 
     makeBoard() {
@@ -68,7 +68,6 @@ class Game {
     }
 
     placeInTable(row, column) {
-        console.log('line 71')
         const placedCell = document.getElementById(`${row}-${column}`);
         placedCell.classList.remove('empty');
         const placedDiv = document.createElement('div')
@@ -101,10 +100,7 @@ class Game {
 
         this.placeInTable(row, column);
 
-        // setTimeout(this.checkAndSwitch(), 1)
-        // this.checkAndSwitch = this.checkAndSwitch.bind(this)
         setTimeout(this.checkAndSwitch.bind(this), 1)
-        // this.checkAndSwitch();
     }
 
     checkAndSwitch() {
@@ -174,9 +170,31 @@ class Game {
         }
     }
 
-    resetButton() {
-        const resetButton = document.querySelector('button');
-        resetButton.addEventListener('click', () => { location.reload() })
+    startResetButton() {
+        console.log(this)
+        let self = this
+        const startResetButton = document.querySelector('button');
+
+        startResetButton.addEventListener('click', function () {
+            if (startResetButton.classList.contains('start')) {
+                self.makeBoard();
+                self.makeHtmlBoard();
+                startResetButton.classList.add('reset');
+                startResetButton.classList.remove('start');
+                startResetButton.innerText = 'Reset Game';
+            }
+            else {
+                const board = document.querySelector('#board');
+                // board.remove();
+
+
+
+                self.makeBoard();
+                self.makeHtmlBoard();
+            }
+        })
+
+
     }
 }
 
